@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace eAppointmentServer.Domain.Entities
 {
-    public sealed class Appointmentcs
+    public sealed class Appointment
     {
-        public Appointmentcs()
+        public Appointment()
         {
             Id= Guid.NewGuid();
         }
