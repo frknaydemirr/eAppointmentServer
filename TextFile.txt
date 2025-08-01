@@ -1,0 +1,89 @@
+MediatR:
+CQRS (Command Query Responsibility Segregation) pattern’inde istekleri (command/query) 
+handler sýnýflarýna yönlendirmek için kullanýlýyor.
+IRequestHandler<TCommand, TResult> arayüzü buradan geliyor.
+
+Microsoft.AspNetCore.Identity:
+UserManager ve Identity sistemi buradan geliyor. Kullanýcý oluþturma, þifre kontrolü, 
+giriþ-çýkýþ gibi iþlemleri Identity API’si üzerinden yapýyoruz.
+
+internal sealed class:
+sealed: Bu sýnýf baþka sýnýflarca miras alýnamaz.
+internal: Sadece ayný assembly içinden eriþilebilir.
+
+IRequestHandler<LoginCommand, Result<LoginCommandResponse>>:
+Bu handler þunu söylüyor:
+
+LoginCommand tipinde bir komut gelirse
+
+Result<LoginCommandResponse> tipinde cevap döndüreceðim.
+
+Yani: "Login isteðini alýp, bir sonuç döndüren sýnýfým."
+
+
+ppUser? appUser =
+    await userManager.Users.FirstOrDefaultAsync(p =>
+    p.UserName == request.UserNameOrEmail
+    || p.Email == request.UserNameOrEmail, cancellationToken);
+
+    Amaç: Kullanýcýnýn girdiði kullanýcý adý veya email ile sistemde
+    kayýtlý bir kullanýcý var mý diye kontrol eder.
+
+    userManager.Users: Identity'nin tuttuðu tüm kullanýcýlarý getirir.
+
+    p.UserName == request.UserNameOrEmail || p.Email == request.UserNameOrEmail
+
+Eðer kullanýcý yoksa appUser null olur.
+
+CheckPasswordAsync: Identity'nin þifre doðrulama methodu.
+
+Þifre yanlýþsa hata mesajý döner.
+
+Niye Bu Yapý:
+
+MediatR (CQRS pattern):
+
+Kodun daha düzenli, test edilebilir ve sorumluluklarýn ayrýlmýþ olmasýný saðlar.
+
+UserManager (Identity):
+
+Þifreleri manuel kontrol etmene gerek kalmaz, güvenlik ve hash iþlemleri hazýr gelir.
+
+Result Wrapper:
+
+Kodun hata ve baþarýlý sonuçlarý tek tipte döndürmesini saðlar.
+
+Record (DTO):
+
+Geriye dönecek cevaplarý sade bir þekilde tutar.
+
+-----------------------------------------------------------
+Infrastructure -> Database iþlemleri:
+-> dependencyInjection extensions metodu yazýlýr:
+
+Kodun Genel Amacý
+Bu kod, Infrastructure katmanýnda Dependency Injection (DI) kayýtlarýný yapar.
+
+ddInfrastructure metodu, Startup.cs / Program.cs içinde çaðrýlýr ve:
+
+Veritabaný baðlantýsýný hazýrlar.
+
+Identity sistemini (UserManager, RoleManager) projeye ekler.
+
+Parola kurallarýný belirler.
+
+Veritabaný Baðlantýsý: AddDbContext
+services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
+});
+AddDbContext:
+EF Core’un ApplicationDbContext sýnýfýný DI container’a ekler.
+
+UseSqlServer(...):
+Veritabaný saðlayýcýsýný (SQL Server) ve connection string’i tanýmlar.
+
+configuration.GetConnectionString("SqlServer"):
+appsettings.json içindeki "ConnectionStrings:SqlServer" deðerini alýr.
+
+ Identity Sistemini Ekleme
