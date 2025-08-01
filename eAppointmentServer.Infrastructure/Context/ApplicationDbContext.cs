@@ -1,4 +1,5 @@
 ﻿using eAppointmentServer.Domain.Entities;
+using GenericRepository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 namespace eAppointmentServer.Infrastructure.Context
 {
     //başka hiçbir katman direkt kullanamayacak -> internal;
-    internal sealed class ApplicationDbContext : IdentityDbContext<AppUser,AppRole,Guid>
+    internal sealed class ApplicationDbContext : IdentityDbContext<AppUser,AppRole,Guid,IdentityUserClaim<Guid>,AppUserRole,IdentityUserLogin<Guid>,IdentityRoleClaim<Guid>,IdentityUserToken<Guid>>,IUnitOfWork
     {
         public ApplicationDbContext(DbContextOptions options) :base(options)
         {

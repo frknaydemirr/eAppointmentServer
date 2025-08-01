@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace eAppointmentServer.Infrastructure.Context.Configurations
+namespace eAppointmentServer.Infrastructure.Configurations
 {
     internal sealed class PatientConfiguration : IEntityTypeConfiguration<Patient>
     {
