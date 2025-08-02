@@ -87,3 +87,55 @@ configuration.GetConnectionString("SqlServer"):
 appsettings.json içindeki "ConnectionStrings:SqlServer" deðerini alýr.
 
  Identity Sistemini Ekleme
+
+
+
+
+
+ -----------------------------------------------------------------
+ using eAppointmentServer.Application.Features.Auth.Login;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace eAppointmentServer.WebApi.Controllers
+{
+    [Route("api/[controller]/[action]")]
+    [ApiController]
+    public sealed  class AuthController(
+        IMediator mediator) : ControllerBase
+
+    {
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginCommand command,CancellationToken cancellation)
+        {
+            var response = await mediator.Send(command);
+            return StatusCode(response.StatusCode, response);
+            
+        }   
+
+    }
+}
+Burasýnýn görevi:
+- AuthController sýnýfý aslýnda ASP.NET Core Web API içerisinde
+kullanýcý giriþi (login) iþlemi yapan bir denetleyicidir. 
+
+[Route("api/[controller]/[action]")]
+Bu attribute, URL yapýsýný belirler.
+
+[HttpPost]
+public async Task<IActionResult> Login(LoginCommand command,
+CancellationToken cancellation)
+
+-LoginCommand command: Client tarafýndan gönderilen login verilerini içeren modeldir 
+(örneðin: e-posta ve þifre).
+CancellationToken cancellation: Ýsteðin iptali gerektiðinde
+iþlemi durdurmaya yarar
+
+var response = await mediator.Send(command);
+mediator.Send(command): LoginCommand nesnesini, arka plandaki
+LoginCommandHandler sýnýfýna gönderir.
+
+response: Handler’ýn ürettiði sonucu alýr.
+StatusCode(...): Handler’dan gelen HTTP durum koduna göre uygun cevap döner.
+Örn: 200 OK, 401 Unauthorized, 400 Bad Request gibi.
