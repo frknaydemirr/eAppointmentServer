@@ -139,3 +139,39 @@ LoginCommandHandler sýnýfýna gönderir.
 response: Handler’ýn ürettiði sonucu alýr.
 StatusCode(...): Handler’dan gelen HTTP durum koduna göre uygun cevap döner.
 Örn: 200 OK, 401 Unauthorized, 400 Bad Request gibi.
+
+
+
+
+
+
+
+
+
+
+-Angular kýsmý-
+ yazýlan Angular AuthService sýnýfý kullanýcý oturumunu kontrol etmek 
+ve JWT (JSON Web Token) üzerinde iþlem yapmak amacýyla yazýlmýþ.
+
+1. Servisin Amacý Nedir?
+Bu AuthService, uygulamaya giriþ yapmýþ bir kullanýcýnýn yetkili (authenticated)
+olup olmadýðýný kontrol eder. JWT token'ý varsa, onu decode eder,
+içerisinden kullanýcý bilgilerini alýr
+ve token'ýn süresi dolmuþsa kullanýcýyý oturumdan çýkarýr.
+
+isAuthenticated(){ metodu giriþ yapýlýp yaplýmadýðýný kontrol eder:
+//tokenýn  olup olmadýðýný kontorl eder!
+tokenDecode: TokenModel = new TokenModel();
+Bu nesne, token decode edildiðinde içerisinden alýnan kullanýcý
+bilgilerini saklamak için kullanýlýr
+TokenModel adlý bir model sýnýfýn var ve içinde id, name, email, username 
+gibi alanlar var.
+
+3. isAuthenticated() Fonksiyonu Nedir? Ne Ýþe Yarar?
+ Sonuç Olarak Ne Yapýyor?
+Ýþlem	Amaç
+Token'ý alýyor	Kullanýcýnýn giriþ yapýp yapmadýðýný kontrol etmek
+JWT'yi çözümlüyor	Kullanýcý bilgilerini (id, name, email, username) almak
+Süre kontrolü yapýyor	Süresi dolmuþ token'ý geçersiz saymak
+Bilgileri modelde tutuyor	Gerekirse baþka bileþenlerde bu bilgilere ulaþabilmek
+Geçersizse yönlendiriyor	Güvenlik açýsýndan login ekranýna gönderiyor
