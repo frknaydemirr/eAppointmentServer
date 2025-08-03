@@ -24,7 +24,8 @@ namespace eAppointmentServer.Infrastructure
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+
 
 
             });

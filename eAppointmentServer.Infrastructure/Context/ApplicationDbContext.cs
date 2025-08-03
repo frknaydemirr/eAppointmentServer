@@ -13,12 +13,15 @@ using System.Threading.Tasks;
 namespace eAppointmentServer.Infrastructure.Context
 {
     //başka hiçbir katman direkt kullanamayacak -> internal;
-    internal sealed class ApplicationDbContext : IdentityDbContext<AppUser,AppRole,Guid,IdentityUserClaim<Guid>,AppUserRole,IdentityUserLogin<Guid>,IdentityRoleClaim<Guid>,IdentityUserToken<Guid>>,IUnitOfWork
+    public sealed class ApplicationDbContext : IdentityDbContext<AppUser,AppRole,Guid,IdentityUserClaim<Guid>,AppUserRole,IdentityUserLogin<Guid>,IdentityRoleClaim<Guid>,IdentityUserToken<Guid>>,IUnitOfWork
     {
-        public ApplicationDbContext(DbContextOptions options) :base(options)
+
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            
         }
+
+
 
         public DbSet<Doctor> Doctors { get; set; }
 
