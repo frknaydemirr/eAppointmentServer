@@ -20,7 +20,7 @@ namespace eAppointmentServer.Infrastructure.Context
             // Bağlantı adını senin config dosyana göre buraya yaz ("SqlServer" ya da "DefaultConnection")
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
 
-
+            s
             return new ApplicationDbContext(optionsBuilder.Options);
         }
     }
