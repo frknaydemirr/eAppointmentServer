@@ -12,7 +12,15 @@ namespace eAppointmentServer.WebAPI
             var builder = WebApplication.CreateBuilder(args);
 
 
-           // builder.Services.AddDefaultCors();
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyOrigin()   // Herkese izin ver
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
 
 
             builder.Services.AddApplication();
