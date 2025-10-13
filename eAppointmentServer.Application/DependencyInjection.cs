@@ -8,6 +8,7 @@ namespace eAppointmentServer.Application
         //porgram. cs deki yapılandırma için kullanılır!
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(DependencyInjection).Assembly);
             services.AddMediatR(configuration =>
             configuration.RegisterServicesFromAssemblies(typeof(DependencyInjection).Assembly));
             return services;
