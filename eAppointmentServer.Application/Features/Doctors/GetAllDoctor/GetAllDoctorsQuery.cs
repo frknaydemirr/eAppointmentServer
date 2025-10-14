@@ -4,7 +4,7 @@ using TS.Result;
 
 namespace eAppointmentServer.Application.Features.Doctors.GetAllDoctor
 {
-    public sealed record class GetAllDoctorQuery() : IRequest<Result<List<Doctor>>>
+    public sealed record class GetAllDoctorsQuery() : IRequest<Result<List<Doctor>>>
     {
     }
 }

@@ -9,6 +9,6 @@ using TS.Result;
 
 namespace eAppointmentServer.Application.Features.Appointments.GetAllDoctorByDepartment
 {
-    public sealed  record  class GetAllDoctorByDepartmentQuery(
+    public sealed  record  class GetAllDoctorsByDepartmentQuery(
         int DepartmentValue): IRequest<Result<List<Doctor>>>;
 }

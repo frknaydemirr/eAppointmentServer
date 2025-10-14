@@ -6,12 +6,12 @@ using TS.Result;
 
 namespace eAppointmentServer.Application.Features.Doctors.GetAllDoctor
 {
-    internal sealed class GetAllDoctorQueryHandler(
+    internal sealed class GetAllDoctorsQueryHandler(
         IDoctorRepository doctorRepository
         
-        ) : IRequestHandler<GetAllDoctorQuery, Result<List<Doctor>>>
+        ) : IRequestHandler<GetAllDoctorsQuery, Result<List<Doctor>>>
     {
-        public async  Task<Result<List<Doctor>>> Handle(GetAllDoctorQuery request, CancellationToken cancellationToken)
+        public async  Task<Result<List<Doctor>>> Handle(GetAllDoctorsQuery request, CancellationToken cancellationToken)
         {
         List<Doctor> doctors=    await doctorRepository
                 .GetAll().OrderBy(p => p.Department)

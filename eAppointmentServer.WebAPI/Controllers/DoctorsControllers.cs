@@ -15,7 +15,7 @@ namespace eAppointmentServer.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult>  GetAll(GetAllDoctorQuery request,CancellationToken cancellationToken)
+        public async Task<IActionResult>  GetAll(GetAllDoctorsQuery request,CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
             return StatusCode(response.StatusCode, response);
